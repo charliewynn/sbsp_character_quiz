@@ -1,0 +1,19 @@
+{
+  "deploy_settings": {
+    "default": {
+      "skill_id": "amzn1.ask.skill.4f2782c5-5fc1-448f-af6c-58b3d27fd2b4",
+      "was_cloned": false,
+      "merge": {
+        "skillManifest": {
+          "apis": {
+            "custom": {
+              "endpoint": {
+                "uri": "ask-custom-Unofficial_Sponge_Bob_Character_Quiz-default"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

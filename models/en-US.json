@@ -1,0 +1,103 @@
+{
+	"interactionModel": {
+		"languageModel": {
+			"types": [
+				{
+					"name": "character",
+					"values": [
+						{
+							"id": "1",
+							"name": {
+								"value": "spongebob",
+								"synonyms": [
+									"sponge bob",
+									"sponge bob square pants"
+								]
+							}
+						},
+						{
+							"id": "2",
+							"name": {
+								"value": "patrick",
+								"synonyms": [
+									"patrick star",
+									"patrick the starfish"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "difficulty",
+					"values": [
+						{
+							"id": "Easy",
+							"name": {
+								"value": "Easy",
+								"synonyms": []
+							}
+						},
+						{
+							"id": "Medium",
+							"name": {
+								"value": "Medium",
+								"synonyms": []
+							}
+						},
+						{
+							"id": "Hard",
+							"name": {
+								"value": "Hard",
+								"synonyms": []
+							}
+						}
+					]
+				}
+			],
+			"intents": [
+				{
+					"name": "AMAZON.CancelIntent",
+					"samples": []
+				},
+				{
+					"name": "AMAZON.HelpIntent",
+					"samples": []
+				},
+				{
+					"name": "AMAZON.StopIntent",
+					"samples": []
+				},
+				{
+					"name": "GuessIntent",
+					"samples": [
+						"{character}",
+						"is it {character}"
+					],
+					"slots": [
+						{
+							"name": "character",
+							"type": "character"
+						}
+					]
+				},
+				{
+					"name": "StartGameIntent",
+					"samples": [
+						"Start an {difficulty} game",
+						"start a new game",
+						"start",
+						"{difficulty}",
+						"start over"
+					],
+					"slots": [
+						{
+							"name": "difficulty",
+							"type": "difficulty"
+						}
+					]
+				}
+			],
+			"invocationName": "spongebob character quiz"
+		}
+	}
+}
