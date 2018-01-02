@@ -68,6 +68,13 @@
 					"samples": []
 				},
 				{
+					"name" : "HintIntent",
+					"samples": [
+						"I need a hint",
+						"Give me a hint"
+					]
+				},
+				{
 					"name": "GuessIntent",
 					"samples": [
 						"{character}",

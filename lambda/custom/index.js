@@ -149,6 +149,11 @@ const MidGameHandlers = Alexa.CreateStateHandler(states.MidGame,
 			"Sorry, that's not the answer I was looking for. " + hintRes[0], hintRes[1]);
 		}
 	},
+	"HintIntent" : function(){
+		const hintResp = GameManager.Hint(false);
+		this.response.speak(hintResp[0]).listen(hintResp[1]);
+		this.emit(":responseReady");
+	},
 	"AMAZON.HelpIntent" : function(){
 		this.response.speak("Say the name of a sponge bob character, or say 'I give up' to go to the next character")
 		.listen("Say 'Start over' to start over");
