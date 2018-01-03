@@ -36,7 +36,7 @@ Squidward.hints.push(new Hint("He lives between Spongebob and Patrick", Medium))
 Squidward.hints.push(new Hint("He is the cashier for the Crusty Crab", Medium));
 
 const Sandy = new Character(4, Medium);
-Sandy.hints.push(new Hint("She wears a flower in her hair", Easy));
+Sandy.hints.push(new Hint("She wears a flower on her helmet", Easy));
 Sandy.hints.push(new Hint("This character is a squirrel", Easy));
 Sandy.hints.push(new Hint("She lives in an air pod because she can't breathe underwater", Medium));
 Sandy.hints.push(new Hint("She's a scientist who researches monkeys", Medium));

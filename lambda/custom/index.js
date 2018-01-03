@@ -121,13 +121,13 @@ const MidGameHandlers = Alexa.CreateStateHandler(states.MidGame,
 		console.log("Their Character", slotData.character);
 		const guessRes = GameManager.Guess(+slotData.character.id);
 		if(guessRes[0]){
-			const scoremsg = "Congrats, you got " + guessRes[1] + " points for getting in right. ";
+			const scoremsg = "Congrats, you got " + guessRes[1] + " points for getting it right. ";
 			const nextRes = GameManager.NextCharacter();
 			if(!nextRes){
 				//out of chars
 				console.log("No more characters");
 				this.response.speak(scoremsg + "That's all of the SpongeBob characters for this game! You scored a " + GameManager.Score())
-				.listen("Say 'Start an easy, medium or hard' game to play again");
+				//.listen("Say 'Start an easy, medium or hard' game to play again");
 				this.handler.state = states.PreGame;
 				this.emit(":responseReady");
 			} else {
