@@ -50,7 +50,7 @@ const NewSessionHandlers = {
 }
 const RequestStart = function(){
 	const msg = "Say 'start an easy, medium, or hard game'";
-	this.emit(':elicitSlot', 'difficulty', msg, msg);
+	return this.emit(':ask', msg, msg);
 }
 const PreGameHandlers = Alexa.CreateStateHandler(states.PreGame, {
 	"StartGameIntent" : function(){
@@ -96,7 +96,7 @@ const PreGameHandlers = Alexa.CreateStateHandler(states.PreGame, {
 	'Unhandled': function() {
 			console.log("pregame UNHANDLED");
 			const msg = "Say 'start an easy, medium, or hard game'";
-			this.emit(':elicitSlot', 'difficulty', msg, msg);
+			return this.emit(':ask', msg, msg);
 	}
 });
 
@@ -112,10 +112,10 @@ const MidGameHandlers = Alexa.CreateStateHandler(states.MidGame,
 
 		const reguessmsg = "Guess a character, or say 'I give up' to go to the next character";
 		if(!slotData.character){
-			return this.emit(':elicitSlot', 'character', reguessmsg, reguessmsg);
+			return this.emit(':ask', reguessmsg, reguessmsg);
 		}
 		if(!slotData.character.isValidated){
-			return this.emit(':elicitSlot', 'character', reguessmsg, reguessmsg);
+			return this.emit(':ask', reguessmsg, reguessmsg);
 		}
 
 		console.log("Their Character", slotData.character);
@@ -138,8 +138,9 @@ const MidGameHandlers = Alexa.CreateStateHandler(states.MidGame,
 				this.emit(":responseReady");
 			}
 		} else {
+			console.log("they got it wrong");
 			const hintRes = GameManager.Hint(false);
-			this.emit(":elicitSlot", 'character',
+			return this.emit(":ask",
 			"Sorry, that's not the answer I was looking for. " + hintRes[0], hintRes[1]);
 		}
 	},
