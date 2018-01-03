@@ -24,6 +24,37 @@
 									"patrick the starfish"
 								]
 							}
+						},
+						{
+							"id": "3",
+							"name": {
+								"value": "Sandy",
+								"synonyms": [
+									"Sandy Cheeks",
+									"Sandy the Squirrel"
+								]
+							}
+						},
+						{
+							"id": "4",
+							"name": {
+								"value": "Plankton",
+								"synonyms": [
+									"Sheldon Plankton",
+									"Sheldon Jay Plankton"
+								]
+							}
+						},
+						{
+							"id": "5",
+							"name": {
+								"value": "Mr. Krabs",
+								"synonyms": [
+									"Mr. Crabs",
+									"Eugene Crabs",
+									"Eugene Harold Crabs"
+								]
+							}
 						}
 					]
 				},

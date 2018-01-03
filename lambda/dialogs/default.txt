@@ -1,8 +1,13 @@
 LaunchRequest
 # StartGameIntent
 # StartGameIntent difficulty=apples test=true
+? GuessIntent test=true character=1
 StartGameIntent difficulty=Medium test=true
-GuessIntent character=neat test=true
+# GuessIntent character=neat test=true
+? GuessIntent test=true character=1
+? GuessIntent test=true character=1
+? GuessIntent test=true character=1
+? GuessIntent test=true character=1
 ? GuessIntent test=true character=1
 ? GuessIntent test=true character=1
 AMAZON.StopIntent

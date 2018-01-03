@@ -15,13 +15,13 @@ exports.handler = function(event, context) {
 };
 const NewSessionHandlers = {
 	'NewSession' : function(){
-		const msg = "Welcome to the unofficial sponge bob character quiz. Say 'Start an easy, medium, or hard game'. I will give you hints unil you guess the correct Spongebob character";
+		const msg = "Welcome to the unofficial sponge bob character quiz. Say 'Start an easy, medium, or hard game'. I will give you hints until you guess the correct Spongebob character";
 		this.handler.state = states.PreGame;
 		this.response.speak(msg).listen(msg);
 		this.emit(":responseReady");
 	},
 	'AMAZON.HelpIntent' : function(){
-		const msg = "Say 'Start an easy, medium, or hard game'. I will give you hints unil you guess the correct Spongebob character";
+		const msg = "Say 'Start an easy, medium, or hard game'. I will give you hints until you guess the correct Spongebob character";
 		this.response.speak(msg).listen(msg);
 		this.emit(":responseReady");
 	},
@@ -48,6 +48,10 @@ const NewSessionHandlers = {
 			this.emit(':responseReady');
 	}
 }
+const RequestStart = function(){
+	const msg = "Say 'start an easy, medium, or hard game'";
+	this.emit(':elicitSlot', 'difficulty', msg, msg);
+}
 const PreGameHandlers = Alexa.CreateStateHandler(states.PreGame, {
 	"StartGameIntent" : function(){
 		console.log("StartGameIntent");
@@ -55,14 +59,7 @@ const PreGameHandlers = Alexa.CreateStateHandler(states.PreGame, {
 		console.log("slotdata", slotData);
 
 		if(!slotData.difficulty){
-			const msg = "Say 'start an easy, medium, or hard game'";
-			this.emit(':elicitSlot', 'difficulty', msg, msg);
-			return;
-		}
-		if(!slotData.difficulty.isValidated){
-			const msg = "Say 'start an easy, medium, or hard game'";
-			this.emit(':elicitSlot', 'difficulty', "Sorry, I misheard you. " + msg, msg);
-			return;
+			return RequestStart();
 		}
 		const difficulty = slotData.difficulty;
 		console.log("difficulty", difficulty);
@@ -72,9 +69,7 @@ const PreGameHandlers = Alexa.CreateStateHandler(states.PreGame, {
 				GameManager.NewGame(difficulty.id);
 			}
 			catch(e){
-				const msg = "Say 'start an easy, medium, or hard game'";
-				this.emit(':elicitSlot', 'difficulty', msg, msg);
-				return;
+				return RequestStart();
 			}
 			this.handler.state = states.MidGame;
 			const hintRes = GameManager.Hint(true);
@@ -100,9 +95,8 @@ const PreGameHandlers = Alexa.CreateStateHandler(states.PreGame, {
 	},
 	'Unhandled': function() {
 			console.log("pregame UNHANDLED");
-			const message = 'Say yes to continue, or no to end the game.';
-			this.response.speak(message).listen(message);
-			this.emit(':responseReady');
+			const msg = "Say 'start an easy, medium, or hard game'";
+			this.emit(':elicitSlot', 'difficulty', msg, msg);
 	}
 });
 
