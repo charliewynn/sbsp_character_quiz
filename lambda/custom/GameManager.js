@@ -9,6 +9,7 @@ const CharacterData = require('./CharacterData');
 const Characters = CharacterData.Characters;
 
 const arrRandom = Utilities.arrRandom;
+let lastHint = "";
 
 let CurrentDifficulty = 'Easy';
 let UsedChars = [];
@@ -21,6 +22,10 @@ exports.Score = function(){
 	return Score;
 }
 
+exports.LastHint = function(){
+	return lastHint;
+}
+
 function ById(id){
 	const hits = Characters.filter(c=>c.id === id);
 	if(hits.length === 0){
@@ -30,6 +35,10 @@ function ById(id){
 		throw "Multiple characters found for id: " + id;
 	}
 	return hits[0];
+}
+
+exports.CurrentName = function(){
+	return ById(CurrentCharacter).name;
 }
 
 exports.Hint = function(isFirst){
@@ -44,6 +53,7 @@ exports.Hint = function(isFirst){
 	if(!nextHint){
 		return ["You're all out of hints, keep guessing or say I give up to move onto the next Character", "No more hints, guess or say I give up"];
 	}
+	lastHint = nextHint.text;
 	HintsUsed.push(nextHint.id);
 	if(isFirst){
 		return ["Your first hint is: " + nextHint.text, "Guess a character or say 'I give up' to go to the next character"];
@@ -53,28 +63,29 @@ exports.Hint = function(isFirst){
 
 exports.Guess = function(id){
 	console.log("Guessing id", id, CurrentCharacter);
+	const hintsUsed = HintsUsed.length;
 	if(CurrentCharacter === id){
 		let scoreAddition = 0;
 		switch(CurrentDifficulty){
 			case 'Easy':
-				scoreAddition = Math.floor(100/(HintsUsed.length || 1));
+				scoreAddition = Math.floor(100/(hintsUsed || 1));
 			break;
 			case 'Medium':
-				scoreAddition = Math.floor(150/(HintsUsed.length || 1));
+				scoreAddition = Math.floor(150/(hintsUsed || 1));
 			break;
 			case 'Hard':
-				scoreAddition = Math.floor(250/(HintsUsed.length || 1));
+				scoreAddition = Math.floor(250/(hintsUsed || 1));
 			break;
 		}
 		HintsUsed = [];
 		Score += scoreAddition;
-		return [true, scoreAddition];
+		return [true, scoreAddition, hintsUsed];
 	}
 	return [false];
 }
 
 exports.NewGame = function(difficulty){
-	if(['Easy','Medium','Hard'].indexOf(difficulty) === -1) throw "Bad game difficulty";
+	if(['Easy','Medium','Hard'].indexOf(difficulty) === -1) throw "Bad hint difficulty";
 	CurrentDifficulty = difficulty;
 	UsedChars = [];
 	HintsUsed = [];
@@ -94,11 +105,13 @@ function NextCharacter(){
 		console.log("No Next Character");
 		return false;
 	}
+	HintsUsed = [];
 	CurrentCharacter = nextChar.id;
 	UsedChars.push(CurrentCharacter);
+	console.log("CharsLeft", UsedChars, Characters.filter(c=>c.difficulty === nextChar.difficulty && UsedChars.indexOf(c.id) === -1));
 	return {
 		Character : nextChar,
-		LeftOnLevel : Characters.filter(c=>c.difficulty === nextChar.difficulty && UsedChars.indexOf(c) === -1).length
+		LeftOnLevel : Characters.filter(c=>c.difficulty === nextChar.difficulty && UsedChars.indexOf(c.id) === -1).length
 	};
 }
 

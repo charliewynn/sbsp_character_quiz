@@ -1,13 +1,23 @@
 LaunchRequest
 # StartGameIntent
 # StartGameIntent difficulty=apples test=true
-? GuessIntent test=true character=1
+# ? GuessIntent test=true character=1
 StartGameIntent difficulty=Medium test=true
+#StopGameIntent
+#AMAZON.NoIntent
+#HintIntent
+#GiveUpIntent
+#AMAZON.StopIntent
 # GuessIntent character=neat test=true
 ? GuessIntent test=true character=1
+GiveUpIntent
 ? GuessIntent test=true character=1
 ? GuessIntent test=true character=1
 ? GuessIntent test=true character=1
 ? GuessIntent test=true character=1
 ? GuessIntent test=true character=1
-AMAZON.StopIntent
+#? GuessIntent test=true character=1
+#? GuessIntent test=true character=1
+#? GuessIntent test=true character=1
+#? GuessIntent test=true character=1
+#AMAZON.StopIntent

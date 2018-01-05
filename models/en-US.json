@@ -101,6 +101,14 @@
 					"samples": []
 				},
 				{
+					"name": "AMAZON.NoIntent",
+					"samples": []
+				},
+				{
+					"name": "AMAZON.YesIntent",
+					"samples": []
+				},
+				{
 					"name": "AMAZON.HelpIntent",
 					"samples": []
 				},
@@ -109,10 +117,25 @@
 					"samples": []
 				},
 				{
+					"name" : "GiveUpIntent",
+					"samples" : [
+						"I give up",
+						"Next character"
+					]
+				},
+				{
 					"name" : "HintIntent",
 					"samples": [
 						"I need a hint",
 						"Give me a hint"
+					]
+				},
+				{
+					"name" : "StopGameIntent",
+					"samples" : [
+						"Start over",
+						"Play new game",
+						"change difficulty"
 					]
 				},
 				{
@@ -132,8 +155,9 @@
 					"name": "StartGameIntent",
 					"samples": [
 						"Start an {difficulty} game",
+						"give me {difficulty} hints",
+						"I want {difficulty} hints",
 						"start a new game",
-						"start",
 						"{difficulty}",
 						"start over"
 					],
