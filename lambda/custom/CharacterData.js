@@ -1,6 +1,6 @@
-const Easy = 'Easy';
-const Medium = 'Medium';
-const Hard = 'Hard';
+const Easy = 'Main';
+const Medium = 'Secondary';
+const Hard = 'Uncommon';
 function Character(id, difficulty, name){
 	//I need to set this id, because it must match up with the
 	//interaction model for alexa

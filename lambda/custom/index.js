@@ -21,7 +21,7 @@ const NewSessionHandlers = {
 	'NewSession' : function(){
 		const msg = "Welcome to the unofficial sponge bob character quiz. Would you like to get easy, medium, or hard hints?";
 		this.handler.state = states.PreGame;
-		this.response.speak(msg).listen("I'll give you hints about the most common characters, then less common and finally the more rare ones. Do you want easy, medium, or hard hints?");
+		this.response.speak(msg).listen("I'll give you hints about the main characters, then less common secondary characters and finally the more rare characters. Do you want easy, medium, or hard hints?");
 		this.emit(":responseReady");
 	},
 	'NextSession' : function(){
@@ -239,7 +239,7 @@ function doNextCharacter(intro){
 		let nextCharIntro = "";
 		console.log("NextRes", nextRes);
 		if(nextRes.LeftOnLevel == 0){
-			if(nextRes.Character.difficulty == 'Hard'){
+			if(nextRes.Character.difficulty == 'Uncommon'){
 				nextCharIntro = "This is the last character! ";
 			} else {
 				nextCharIntro = "This is the last " + nextRes.Character.difficulty + " character. ";
