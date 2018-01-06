@@ -2,6 +2,7 @@
 var Alexa = require("alexa-sdk");
 const GameManager = require('./GameManager');
 const Utilities = require('./Utilities');
+const Difficulties = require('./CharacterData').Difficulty
 const arrRandom = Utilities.arrRandom;
 
 const states = {
@@ -9,30 +10,34 @@ const states = {
 	MidGame: '_MidGame',
 	MightStopGame : '_MightStopGame',
 	WillProbablyStopGame : '_WillProbablyStopGame',
+	AskShouldPlayAgain : "_AskShouldPlayAgain",
 	EndGame: '_EndGame'
 }
 exports.handler = function(event, context) {
 		var alexa = Alexa.handler(event, context);
 		alexa.appId = 'amzn1.ask.skill.4f2782c5-5fc1-448f-af6c-58b3d27fd2b4';
-    alexa.registerHandlers(NewSessionHandlers, PreGameHandlers, MidGameHandlers, MightStopGameHandlers, WillProbablyStopGameHandlers);
+    alexa.registerHandlers(NewSessionHandlers, PreGameHandlers, MidGameHandlers, MightStopGameHandlers, WillProbablyStopGameHandlers, GameOverAskToPlayAgainHandlers);
     alexa.execute();
 };
 const NewSessionHandlers = {
 	'NewSession' : function(){
-		const msg = "Welcome to the unofficial sponge bob character quiz. Would you like to get easy, medium, or hard hints?";
+		const msg = "Welcome to the unofficial sponge bob character quiz. Would you like to play an easy, medium, or hard game?";
 		this.handler.state = states.PreGame;
-		this.response.speak(msg).listen("I'll give you hints about the main characters, then less common secondary characters and finally the more rare characters. Do you want easy, medium, or hard hints?");
+		this.response.speak(msg).listen("I'll give you hints about the main characters, then less common secondary characters and finally the more difficult characters. Do you want to play on easy, medium, or hard?");
 		this.emit(":responseReady");
 	},
 	'NextSession' : function(){
-		const msg = "Do you want to get easy, medium, or hard hints?";
+		const msg = "Do you want to play an easy, medium, or hard game?";
 		this.handler.state = states.PreGame;
 		this.response.speak(msg).listen(msg);
 		this.emit(":responseReady");
 	},
 	'AMAZON.HelpIntent' : function(){
-		const msg = "Say 'Start an easy, medium, or hard game'. I will give you hints until you guess the correct Spongebob character";
-		this.response.speak(msg).listen(msg);
+		const msg = "This is the unofficial sponge bob character quiz. You decide if you want to play on easy, medium, or hard. I'll start you off with " + 
+		"the main sponge bob characters and give you hints. The hints will be easy, medium or hard depending on which difficulty you picked. " +
+		"After the main characters I'll quiz you on some of the secondary characters. If you keep playing I'll ask you to guess some of the harder characters. " +
+		"You get more points if you play on harder difficulties, so practice until you can guess them all on Hard! Do you want to play on easy, medium or hard.";
+		this.response.speak(msg).listen("Do you want to play on easy, medium, or hard?");
 		this.emit(":responseReady");
 	},
 	"AMAZON.StopIntent": function() {
@@ -103,6 +108,14 @@ const PreGameHandlers = Alexa.CreateStateHandler(states.PreGame, {
 			this.response.speak("Goodbye!");
 			this.emit(':responseReady');
 	},
+	'AMAZON.HelpIntent' : function(){
+		const msg = "This is the unofficial sponge bob character quiz. You decide if you want to play on easy, medium, or hard. I'll start you off with " + 
+		"the main sponge bob characters and give you hints. The hints will be easy, medium or hard depending on which difficulty you picked. " +
+		"After the main characters I'll quiz you on some of the secondary characters. If you keep playing I'll ask you to guess some of the harder characters. " +
+		"You get more points if you play on harder difficulties, so practice until you can guess them all on Hard! Do you want to play on easy, medium or hard.";
+		this.response.speak(msg).listen("Do you want to play on easy, medium, or hard?");
+		this.emit(":responseReady");
+	},
 	'Unhandled': function() {
 			console.log("pregame UNHANDLED");
 			const msg = "Say 'start an easy, medium, or hard game'";
@@ -128,6 +141,19 @@ const MightStopGameHandlers = Alexa.CreateStateHandler(states.MightStopGame,
 		this.emit(":ask", "Are you sure you want to stop your game?", "Say yes to stop your game, or no to continue");
 	}
 
+});
+const GameOverAskToPlayAgainHandlers = Alexa.CreateStateHandler(states.AskShouldPlayAgain,
+{
+	'AMAZON.YesIntent' : function(){
+		this.handler.state = states.PreGame;
+		this.emit(":ask", "Great, which difficulty do you want to play on?", "Say start an easy, medium, or hard game.");
+	},
+	'AMAZON.NoIntent' : function(){
+		this.emit(":tell", "Thanks for playing");
+	},
+	"Unhandled" : function(){
+		this.emit(":ask", "Say yes to start a new game, or no to quit playing");
+	}
 });
 const WillProbablyStopGameHandlers = Alexa.CreateStateHandler(states.WillProbablyStopGame,
 {
@@ -208,8 +234,8 @@ const MidGameHandlers = Alexa.CreateStateHandler(states.MidGame,
 		doNextCharacter.bind(this)(intro);
 	},
 	"AMAZON.HelpIntent" : function(){
-		this.response.speak("Say the name of a sponge bob character, or say 'I give up' to go to the next character")
-		.listen("Say 'Start over' to start over");
+		this.response.speak("Say the name of a sponge bob character, or say 'I need a hint' to get another hint. ")
+		.listen("You can also say 'I give up' to go to the next character. Or say 'Start over' to start over");
 		this.emit(':responseReady');
 	},
 	'SessionEndedRequest': function () {
@@ -220,8 +246,8 @@ const MidGameHandlers = Alexa.CreateStateHandler(states.MidGame,
 	},
 	'Unhandled': function() {
 			console.log("mid UNHANDLED");
-			const message = 'I didn\'t understand you. Guess a character or say \'I Give up\'';
-			this.response.speak(message).listen(message);
+			const message = 'I didn\'t understand you. Guess a character or say I need a hint to get another hint';
+			this.response.speak(message).listen("You can also say 'I give up' to go to the next character.");
 			this.emit(':responseReady');
 	}
 });
@@ -231,15 +257,16 @@ function doNextCharacter(intro){
 	if(!nextRes){
 		//out of chars
 		console.log("No more characters");
-		this.response.speak(intro + " That's all of the SpongeBob characters for this game! Your final score is " + GameManager.Score() + " points.")
+		this.response.speak(intro + " That's all of the SpongeBob characters for this game! Your final score is " + GameManager.Score() + " points. Would you like to play again?")
+		.listen("Would you like to play again?");
 		//.listen("Say 'Start an easy, medium or hard' game to play again");
-		this.handler.state = states.PreGame;
+		this.handler.state = states.AskShouldPlayAgain
 		this.emit(":responseReady");
 	} else {
 		let nextCharIntro = "";
 		console.log("NextRes", nextRes);
 		if(nextRes.LeftOnLevel == 0){
-			if(nextRes.Character.difficulty == 'Uncommon'){
+			if(nextRes.Character.difficulty == Difficulties.Hard){
 				nextCharIntro = "This is the last character! ";
 			} else {
 				nextCharIntro = "This is the last " + nextRes.Character.difficulty + " character. ";

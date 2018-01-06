@@ -7,11 +7,13 @@
 const Utilities = require('./Utilities');
 const CharacterData = require('./CharacterData');
 const Characters = CharacterData.Characters;
+const Difficulties = CharacterData.Difficulty;
+const HintDifficulty = CharacterData.HintDifficulty;
 
 const arrRandom = Utilities.arrRandom;
 let lastHint = "";
 
-let CurrentDifficulty = 'Easy';
+let CurrentDifficulty = HintDifficulty.Easy;
 let UsedChars = [];
 
 let HintsUsed = [];
@@ -67,17 +69,18 @@ exports.Guess = function(id){
 	if(CurrentCharacter === id){
 		let scoreAddition = 0;
 		switch(CurrentDifficulty){
-			case 'Easy':
+			case HintDifficulty.Easy:
 				scoreAddition = Math.floor(100/(hintsUsed || 1));
 			break;
-			case 'Medium':
+			case HintDifficulty.Medium:
 				scoreAddition = Math.floor(150/(hintsUsed || 1));
 			break;
-			case 'Hard':
+			case HintDifficulty.Hard:
 				scoreAddition = Math.floor(250/(hintsUsed || 1));
 			break;
 		}
 		HintsUsed = [];
+		console.log("They scored", scoreAddition);
 		Score += scoreAddition;
 		return [true, scoreAddition, hintsUsed];
 	}
@@ -85,7 +88,7 @@ exports.Guess = function(id){
 }
 
 exports.NewGame = function(difficulty){
-	if(['Easy','Medium','Hard'].indexOf(difficulty) === -1) throw "Bad hint difficulty";
+	if(!HintDifficulty[difficulty]) throw "Bad hint difficulty: " + difficulty;
 	CurrentDifficulty = difficulty;
 	UsedChars = [];
 	HintsUsed = [];
@@ -95,11 +98,11 @@ exports.NewGame = function(difficulty){
 
 function NextCharacter(){
 	console.log("Getting Next Character", UsedChars);
-	let nextChar = arrRandom(Characters.filter(c=>c.difficulty === 'Easy' && UsedChars.indexOf(c.id) === -1));
+	let nextChar = arrRandom(Characters.filter(c=>c.difficulty === Difficulties.Easy && UsedChars.indexOf(c.id) === -1));
 	if(!nextChar)
-		nextChar = arrRandom(Characters.filter(c=>c.difficulty === 'Medium' && UsedChars.indexOf(c.id) === -1));
+		nextChar = arrRandom(Characters.filter(c=>c.difficulty === Difficulties.Medium && UsedChars.indexOf(c.id) === -1));
 	if(!nextChar)
-		nextChar = arrRandom(Characters.filter(c=>c.difficulty === 'Hard' && UsedChars.indexOf(c.id) === -1));
+		nextChar = arrRandom(Characters.filter(c=>c.difficulty === Difficulties.Hard && UsedChars.indexOf(c.id) === -1));
 	if(!nextChar){
 		//game is over, they did everyone
 		console.log("No Next Character");

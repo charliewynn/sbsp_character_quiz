@@ -155,8 +155,6 @@
 					"name": "StartGameIntent",
 					"samples": [
 						"Start an {difficulty} game",
-						"give me {difficulty} hints",
-						"I want {difficulty} hints",
 						"start a new game",
 						"{difficulty}",
 						"start over"

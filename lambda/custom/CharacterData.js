@@ -1,6 +1,18 @@
 const Easy = 'Main';
 const Medium = 'Secondary';
 const Hard = 'Uncommon';
+const HintDifficulty = {
+	Easy : "Easy",
+	Medium : "Medium",
+	Hard : "Hard"
+}
+
+exports.HintDifficulty = HintDifficulty;
+exports.Difficulty = {
+	Easy : Easy,
+	Medium : Medium,
+	Hard : Hard
+}
 function Character(id, difficulty, name){
 	//I need to set this id, because it must match up with the
 	//interaction model for alexa
@@ -8,6 +20,18 @@ function Character(id, difficulty, name){
 	this.name = name;
 	this.difficulty = difficulty;
 	this.hints = [];
+	this.easy = function(hint){
+		this.hints.push(new Hint(hint, HintDifficulty.Easy));
+		return this;
+	}
+	this.medium = function(hint){
+		this.hints.push(new Hint(hint, HintDifficulty.Medium));
+		return this;
+	}
+	this.hard = function(hint){
+		this.hints.push(new Hint(hint, HintDifficulty.Hard));
+		return this;
+	}
 }
 let NextHintID = 1;
 function Hint(text, difficulty){
@@ -18,46 +42,91 @@ function Hint(text, difficulty){
 	this.difficulty = difficulty;
 }
 
-const SpongeBob = new Character(1, Easy, "sponge bob");
-SpongeBob.hints.push(new Hint("Lives in a pineapple", Easy));
-SpongeBob.hints.push(new Hint("His best friend is Patrick", Easy));
-SpongeBob.hints.push(new Hint("His initials are S.B.", Medium));
-SpongeBob.hints.push(new Hint("His pet's name is Gary.", Medium));
+const SpongeBob = new Character(1, Easy, "sponge bob")
+.easy("Lives in a pineapple. ")
+.easy("His best friend is Patrick. ")
+.medium("His initials are S.B. ")
+.medium("His pet's name is Gary. ");
 
-const Patrick = new Character(2, Easy, "patrick");
-Patrick.hints.push(new Hint("Lives under a rock", Easy));
-Patrick.hints.push(new Hint("His best friend is SpongeBob", Easy));
-Patrick.hints.push(new Hint("His initials are P.S.", Medium));
-Patrick.hints.push(new Hint("He is a starfish", Medium));
+const Patrick = new Character(2, Easy, "patrick")
+.easy("Lives under a rock. ")
+.easy("His best friend is SpongeBob. ")
+.medium("His initials are P.S. ")
+.medium("He is a starfish. ");
 
-const Squidward = new Character(3, Easy, "squidward");
-Squidward.hints.push(new Hint("He plays the clarinet", Easy));
-Squidward.hints.push(new Hint("He has six legs", Easy));
-Squidward.hints.push(new Hint("He lives between Spongebob and Patrick", Medium));
-Squidward.hints.push(new Hint("He is the cashier for the Crusty Crab", Medium));
+const Squidward = new Character(3, Easy, "squidward")
+.easy("He plays the clarinet. ")
+.easy("He has six legs. ")
+.medium("He lives between Spongebob and Patrick. ")
+.medium("He is the cashier for the Crusty Crab. ");
 
-const Sandy = new Character(4, Medium, "Sandy");
-Sandy.hints.push(new Hint("She wears a flower on her helmet", Easy));
-Sandy.hints.push(new Hint("This character is a squirrel", Easy));
-Sandy.hints.push(new Hint("She lives in an air pod because she can't breathe underwater", Medium));
-Sandy.hints.push(new Hint("She's a scientist who researches monkeys", Medium));
+const Sandy = new Character(4, Easy, "sandy")
+.easy("She wears a flower on her helmet. ")
+.easy("This character is a squirrel. ")
+.medium("She lives in an air pod because she can't breathe underwater. ")
+.medium("She's a scientist who researches monkeys. ");
 
-const MrKrabs = new Character(6, Medium, "Mr. Crabs");
-MrKrabs.hints.push(new Hint("He's the owner of the Crusty Crab", Easy));
-MrKrabs.hints.push(new Hint("He is Sponge Bob's boss", Easy));
-MrKrabs.hints.push(new Hint("He lives in an anchor with his daughter Pearl", Medium));
-MrKrabs.hints.push(new Hint("His girlfriend's name is Mrs. Puff", Medium));
+const MrKrabs = new Character(6, Easy, "Mr. crabs")
+.easy("He's the owner of the Crusty Crab. ")
+.easy("He is Sponge Bob's boss. ")
+.medium("He lives in an anchor with his daughter Pearl. ")
+.medium("His girlfriend's name is Mrs. Puff. ");
 
-const Plankton = new Character(5, Hard, "Plankton");
-Plankton.hints.push(new Hint("He's always trying to steal Mr. Crabs Crabby Patty recipe", Easy));
-Plankton.hints.push(new Hint("He owns an amoeba as a pet named Spot", Easy));
-Plankton.hints.push(new Hint("He runs the Chum Bucket with his computer Karen", Medium));
-Plankton.hints.push(new Hint("His first name is Sheldon, and his middle initial is jay. But he is better known as what?", Medium));
+const Plankton = new Character(5, Easy, "plankton")
+.easy("He's always trying to steal Mr. Crabs Crabby Patty recipe. ")
+.easy("He owns an amoeba as a pet, it's name is spot. ")
+.medium("He runs the Chum Bucket with his computer Karen. ")
+.medium("His first name is Sheldon, and his middle initial is jay. But he is better known as what? ");
+
+const MrsPuff = new Character(7, Medium, "Mrs. Puff")
+.easy("She's Sponge bob's teacher at the boating school")
+
+const PearlKrabs = new Character(8, Medium, "Pearl Crabs")
+.easy("someeasyhint")
+
+const MermaidMan = new Character(9, Medium, "Mermaid Man")
+.easy("mermaidthing")
+
+const Gary = new Character(10, Medium, "Gary")
+.easy("snth")
+
+const LarryTheLobster = new Character(11, Hard, "Larry the Lobster")
+.easy("lobsterlobster")
+
+const KingNeptune = new Character(12, Hard, "King Neptune")
+.easy("kingking")
+
+const Karen = new Character(13, Hard, "Karen Plankton")
+.easy("karenplankton")
+
+const PottyTheParrot = new Character(14, Hard, "Potty the Parrot")
+.easy("parrotparrot")
+/*
+	spongebob
+	patrick
+	squidward
+	sandy
+	mr. krabs
+	plankton
+
+	Mrs. Puff
+	Pearl Krabs
+	Mermaid Man
+	Gary
+
+	Larry the Lobster
+	King Neptune
+	Karen
+	Potty the parrot
+*/
+
+
+//start hard
 
 const Characters = [
-	SpongeBob, Patrick, Squidward,
-	Sandy, MrKrabs,
-	Plankton
+	SpongeBob, Patrick, Squidward, Sandy, MrKrabs, Plankton,
+	MrsPuff, PearlKrabs, MermaidMan, Gary,
+	LarryTheLobster, KingNeptune, Karen, PottyTheParrot
 ];
 
 exports.Characters = Characters;
