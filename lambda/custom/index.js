@@ -199,7 +199,7 @@ const MidGameHandlers = Alexa.CreateStateHandler(states.MidGame,
 		console.log("Their Character", slotData.character);
 		const guessRes = GameManager.Guess(+slotData.character.id);
 		if(guessRes[0]){
-			const numHints = guessRes[2] + (guessRes[2] == 1 ? " hint. " : " hints. ");
+			const numHints = (guessRes[2] == 1 ? "just one hint. " : (guessRes[2] + " hints. "));
 			const gratsMsg = arrRandom([
 				"Congrats",
 				"Nice job",

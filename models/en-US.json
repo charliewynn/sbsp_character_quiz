@@ -36,7 +36,7 @@
 							}
 						},
 						{
-							"id": "5",
+							"id": "6",
 							"name": {
 								"value": "Plankton",
 								"synonyms": [
@@ -46,7 +46,7 @@
 							}
 						},
 						{
-							"id": "6",
+							"id": "5",
 							"name": {
 								"value": "Mr. Krabs",
 								"synonyms": [
@@ -63,6 +63,75 @@
 								"synonyms": [
 									"squidward",
 									"Squidward Tentacles"
+								]
+							}
+						},
+						{
+							"id": "7",
+							"name": {
+								"value": "MrsPuff",
+								"synonyms": [
+									"Mrs. Puff",
+									"miss puff",
+									"misses puff"
+								]
+							}
+						},
+						{
+							"id": "8",
+							"name": {
+								"value": "mermaidman",
+								"synonyms": [
+									"Mermaid Man"
+								]
+							}
+						},
+						{
+							"id": "10",
+							"name": {
+								"value": "Gary",
+								"synonyms": [
+									"Gary",
+									"Gary the snail"
+								]
+							}
+						},
+						{
+							"id": "11",
+							"name": {
+								"value": "FlyingDutchman",
+								"synonyms": [
+									"the flying dutchman",
+									"flying dutchman"
+								]
+							}
+						},
+						{
+							"id": "12",
+							"name": {
+								"value": "pearlkrabs",
+								"synonyms": [
+									"Pearl Crabs",
+									"Pearl"
+								]
+							}
+						},
+						{
+							"id": "13",
+							"name": {
+								"value": "Karen",
+								"synonyms": [
+									"Karen"
+								]
+							}
+						},
+						{
+							"id": "14",
+							"name": {
+								"value": "Patchy",
+								"synonyms": [
+									"Patchy",
+									"Patchy the pirate"
 								]
 							}
 						}
@@ -101,15 +170,11 @@
 					"samples": []
 				},
 				{
-					"name": "AMAZON.NoIntent",
-					"samples": []
-				},
-				{
-					"name": "AMAZON.YesIntent",
-					"samples": []
-				},
-				{
 					"name": "AMAZON.HelpIntent",
+					"samples": []
+				},
+				{
+					"name": "AMAZON.NoIntent",
 					"samples": []
 				},
 				{
@@ -117,26 +182,16 @@
 					"samples": []
 				},
 				{
-					"name" : "GiveUpIntent",
-					"samples" : [
+					"name": "AMAZON.YesIntent",
+					"samples": []
+				},
+				{
+					"name": "GiveUpIntent",
+					"samples": [
 						"I give up",
 						"Next character"
-					]
-				},
-				{
-					"name" : "HintIntent",
-					"samples": [
-						"I need a hint",
-						"Give me a hint"
-					]
-				},
-				{
-					"name" : "StopGameIntent",
-					"samples" : [
-						"Start over",
-						"Play new game",
-						"change difficulty"
-					]
+					],
+					"slots": []
 				},
 				{
 					"name": "GuessIntent",
@@ -152,9 +207,19 @@
 					]
 				},
 				{
+					"name": "HintIntent",
+					"samples": [
+						"I need a hint",
+						"Give me a hint"
+					],
+					"slots": []
+				},
+				{
 					"name": "StartGameIntent",
 					"samples": [
 						"Start an {difficulty} game",
+						"give me {difficulty} hints",
+						"I want {difficulty} hints",
 						"start a new game",
 						"{difficulty}",
 						"start over"
@@ -165,6 +230,15 @@
 							"type": "difficulty"
 						}
 					]
+				},
+				{
+					"name": "StopGameIntent",
+					"samples": [
+						"Start over",
+						"Play new game",
+						"change difficulty"
+					],
+					"slots": []
 				}
 			],
 			"invocationName": "spongebob character quiz"

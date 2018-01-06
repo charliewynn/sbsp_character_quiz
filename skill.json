@@ -13,6 +13,8 @@
 						"Sponge bob square pants",
 						"spongebob square pants"
 					],
+					"smallIconUri": "https://raw.githubusercontent.com/charliewynn/sbsp_character_quiz/master/icon108.png",
+					"largeIconUri": "https://raw.githubusercontent.com/charliewynn/sbsp_character_quiz/master/icon512.png",
 					"name": "Unofficial Sponge Bob Character Quiz",
 					"description": "Get quizzed on your favorite Sponge Bob characters with this unofficial quiz. Play on easy, medium, or hard mode."
 				}
